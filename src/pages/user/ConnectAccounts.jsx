@@ -28,9 +28,18 @@ const ConnectAccounts = () => {
     }
   };
 
-  const connectAccount = (platform) => {
-    // This would redirect to OAuth flow
-    alert(`Connect ${platform} - OAuth integration coming soon!`);
+  const connectAccount = async (platform) => {
+    if (platform === 'Twitter') {
+      try {
+        const response = await api.get('/social/auth/twitter');
+        window.location.href = response.data.url;
+      } catch (error) {
+        console.error('Failed to initiate Twitter auth:', error);
+        alert('Failed to start Twitter connection. Please try again.');
+      }
+    } else {
+      alert(`Connect ${platform} - OAuth integration coming soon!`);
+    }
   };
 
   const isConnected = (platformId) => {
@@ -81,8 +90,8 @@ const ConnectAccounts = () => {
                 <div className="mb-4">
                   <div className="flex items-center space-x-3">
                     {account.profilePicture && (
-                      <img 
-                        src={account.profilePicture} 
+                      <img
+                        src={account.profilePicture}
                         alt={account.displayName}
                         className="w-8 h-8 rounded-full"
                       />
@@ -103,11 +112,10 @@ const ConnectAccounts = () => {
 
               <button
                 onClick={() => connectAccount(platform.name)}
-                className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
-                  connected
+                className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${connected
                     ? 'bg-green-100 text-green-800 cursor-default'
                     : 'bg-indigo-600 text-white hover:bg-indigo-700'
-                }`}
+                  }`}
                 disabled={connected}
               >
                 {connected ? '✅ Connected' : `Connect ${platform.name}`}
@@ -129,8 +137,8 @@ const ConnectAccounts = () => {
       <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
         <h3 className="text-lg font-medium text-blue-900 mb-2">🔒 Your Data is Secure</h3>
         <p className="text-blue-800">
-          We use industry-standard OAuth 2.0 authentication to connect your accounts. 
-          We never store your passwords and only request the minimum permissions needed 
+          We use industry-standard OAuth 2.0 authentication to connect your accounts.
+          We never store your passwords and only request the minimum permissions needed
           to post on your behalf.
         </p>
       </div>

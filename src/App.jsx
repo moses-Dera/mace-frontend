@@ -5,6 +5,7 @@ import Register from './pages/auth/Register';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import DataDeletion from './pages/DataDeletion';
+import TwitterCallback from './pages/user/TwitterCallback';
 import Dashboard from './pages/user/Dashboard';
 import CreatePost from './pages/user/CreatePost';
 import ScheduledPosts from './pages/user/ScheduledPosts';
@@ -25,12 +26,14 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+
           {/* Public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
+          <Route path="/social/callback/twitter" element={<TwitterCallback />} />
 
           {/* Protected routes */}
           <Route path="/" element={<PrivateRoute />}>
