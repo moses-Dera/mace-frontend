@@ -6,11 +6,11 @@ const ConnectAccounts = () => {
   const [loading, setLoading] = useState(true);
 
   const platforms = [
-    { id: 'instagram', name: 'Instagram', icon: '📷', color: 'bg-pink-500' },
-    { id: 'twitter', name: 'Twitter', icon: '🐦', color: 'bg-blue-400' },
-    { id: 'linkedin', name: 'LinkedIn', icon: '💼', color: 'bg-blue-600' },
-    { id: 'facebook', name: 'Facebook', icon: '📘', color: 'bg-blue-700' },
-    { id: 'tiktok', name: 'TikTok', icon: '🎵', color: 'bg-black' }
+    { id: 'twitter', name: 'Twitter', icon: '🐦', color: 'bg-blue-400', available: true },
+    { id: 'instagram', name: 'Instagram', icon: '📷', color: 'bg-pink-500', available: false },
+    { id: 'linkedin', name: 'LinkedIn', icon: '💼', color: 'bg-blue-600', available: false },
+    { id: 'facebook', name: 'Facebook', icon: '📘', color: 'bg-blue-700', available: false },
+    { id: 'tiktok', name: 'TikTok', icon: '🎵', color: 'bg-black', available: false }
   ];
 
   useEffect(() => {
@@ -28,8 +28,13 @@ const ConnectAccounts = () => {
     }
   };
 
-  const connectAccount = async (platform) => {
-    if (platform === 'Twitter') {
+  const connectAccount = async (platformName, available) => {
+    if (!available) {
+      alert(`${platformName} integration coming soon! 🚀\n\nCurrently only Twitter is available for posting.`);
+      return;
+    }
+    
+    if (platformName === 'Twitter') {
       try {
         const response = await api.get('/social/auth/twitter');
         window.location.href = response.data.url;
@@ -37,8 +42,6 @@ const ConnectAccounts = () => {
         console.error('Failed to initiate Twitter auth:', error);
         alert('Failed to start Twitter connection. Please try again.');
       }
-    } else {
-      alert(`Connect ${platform} - OAuth integration coming soon!`);
     }
   };
 
@@ -79,9 +82,13 @@ const ConnectAccounts = () => {
                   {platform.icon}
                 </div>
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900">{platform.name}</h3>
+                  <h3 className="text-lg font-medium text-gray-900">
+                    {platform.name}
+                    {platform.available && <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Available</span>}
+                    {!platform.available && <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Coming Soon</span>}
+                  </h3>
                   <p className="text-sm text-gray-500">
-                    {connected ? 'Connected' : 'Not connected'}
+                    {connected ? 'Connected' : platform.available ? 'Not connected' : 'Integration in progress'}
                   </p>
                 </div>
               </div>
@@ -111,14 +118,17 @@ const ConnectAccounts = () => {
               )}
 
               <button
-                onClick={() => connectAccount(platform.name)}
-                className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${connected
+                onClick={() => connectAccount(platform.name, platform.available)}
+                className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
+                  connected
                     ? 'bg-green-100 text-green-800 cursor-default'
-                    : 'bg-indigo-600 text-white hover:bg-indigo-700'
-                  }`}
+                    : platform.available
+                    ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                    : 'bg-gray-300 text-gray-600 hover:bg-gray-400'
+                }`}
                 disabled={connected}
               >
-                {connected ? '✅ Connected' : `Connect ${platform.name}`}
+                {connected ? '✅ Connected' : platform.available ? `Connect ${platform.name}` : `${platform.name} Coming Soon`}
               </button>
 
               {connected && (
@@ -134,13 +144,30 @@ const ConnectAccounts = () => {
         })}
       </div>
 
-      <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
-        <h3 className="text-lg font-medium text-blue-900 mb-2">🔒 Your Data is Secure</h3>
-        <p className="text-blue-800">
-          We use industry-standard OAuth 2.0 authentication to connect your accounts.
-          We never store your passwords and only request the minimum permissions needed
-          to post on your behalf.
-        </p>
+      <div className="mt-8 space-y-4">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+          <h3 className="text-lg font-medium text-green-900 mb-2">🐦 Twitter Integration Live!</h3>
+          <p className="text-green-800">
+            Twitter posting is fully functional! Connect your account to start scheduling tweets.
+          </p>
+        </div>
+        
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+          <h3 className="text-lg font-medium text-yellow-900 mb-2">🚀 More Platforms Coming Soon</h3>
+          <p className="text-yellow-800">
+            Instagram, LinkedIn, Facebook, and TikTok integrations are in development.
+            Stay tuned for updates!
+          </p>
+        </div>
+        
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="text-lg font-medium text-blue-900 mb-2">🔒 Your Data is Secure</h3>
+          <p className="text-blue-800">
+            We use industry-standard OAuth 2.0 authentication to connect your accounts.
+            We never store your passwords and only request the minimum permissions needed
+            to post on your behalf.
+          </p>
+        </div>
       </div>
     </div>
   );
