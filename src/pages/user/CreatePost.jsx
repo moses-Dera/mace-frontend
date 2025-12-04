@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 
 const CreatePost = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     caption: '',
     hashtags: '',
@@ -40,8 +42,12 @@ const CreatePost = () => {
         scheduledTime: new Date(formData.scheduledTime).toISOString()
       });
 
-      setSuccess('Post scheduled successfully!');
+      setSuccess('Post scheduled successfully! Redirecting...');
       setFormData({ caption: '', hashtags: '', platforms: [], scheduledTime: '' });
+
+      setTimeout(() => {
+        navigate('/scheduled');
+      }, 1500);
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to schedule post');
     } finally {

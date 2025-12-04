@@ -13,7 +13,9 @@ const ScheduledPosts = () => {
   const fetchPosts = async () => {
     try {
       const params = filter !== 'all' ? { status: filter } : {};
+      console.log('📥 Fetching posts with params:', params);
       const response = await api.get('/posts/scheduled', { params });
+      console.log('✅ Fetched posts:', response.data.posts);
       setPosts(response.data.posts);
     } catch (error) {
       console.error('Failed to fetch posts:', error);
@@ -54,17 +56,25 @@ const ScheduledPosts = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Scheduled Posts</h1>
-        
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-        >
-          <option value="all">All Posts</option>
-          <option value="pending">Pending</option>
-          <option value="published">Published</option>
-          <option value="failed">Failed</option>
-        </select>
+
+        <div className="flex space-x-4">
+          <button
+            onClick={fetchPosts}
+            className="px-3 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 flex items-center"
+          >
+            🔄 Refresh
+          </button>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="all">All Posts</option>
+            <option value="pending">Pending</option>
+            <option value="published">Published</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
       </div>
 
       {posts.length === 0 ? (
@@ -81,8 +91,8 @@ const ScheduledPosts = () => {
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <p className="text-gray-900 font-medium mb-2">
-                    {post.caption.length > 100 
-                      ? `${post.caption.substring(0, 100)}...` 
+                    {post.caption.length > 100
+                      ? `${post.caption.substring(0, 100)}...`
                       : post.caption
                     }
                   </p>
@@ -98,12 +108,12 @@ const ScheduledPosts = () => {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="flex items-center space-x-3">
                   <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(post.status)}`}>
                     {post.status}
                   </span>
-                  
+
                   {post.status === 'pending' && (
                     <button
                       onClick={() => deletePost(post._id)}
@@ -126,9 +136,9 @@ const ScheduledPosts = () => {
                           {result.success ? '✅ Published' : `❌ ${result.error}`}
                         </span>
                         {result.postUrl && (
-                          <a 
-                            href={result.postUrl} 
-                            target="_blank" 
+                          <a
+                            href={result.postUrl}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="ml-2 text-blue-600 hover:text-blue-800"
                           >
