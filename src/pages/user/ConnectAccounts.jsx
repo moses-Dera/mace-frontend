@@ -35,13 +35,13 @@ const ConnectAccounts = () => {
     }
     
     if (platformName === 'Twitter') {
-      // Mock connection for demo - replace with real OAuth when ready
-      alert('🔄 Twitter Reconnection\n\nIn a real app, this would:\n1. Open Twitter OAuth\n2. Refresh your token\n3. Update connection status\n\nFor now, this is a demo placeholder.');
-      
-      // Simulate successful reconnection
-      setTimeout(() => {
-        alert('✅ Twitter reconnected successfully!\n\n(This is a demo - no actual connection made)');
-      }, 1000);
+      try {
+        const response = await api.get('/social/auth/twitter');
+        window.location.href = response.data.url;
+      } catch (error) {
+        console.error('Failed to initiate Twitter auth:', error);
+        alert('Failed to start Twitter connection. Please try again.');
+      }
     }
   };
 
