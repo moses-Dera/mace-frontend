@@ -29,6 +29,10 @@ const CreatePost = () => {
     try {
       const hashtags = formData.hashtags.split(' ').filter(tag => tag.trim());
 
+      console.log('🕒 Debug Timezone:');
+      console.log('   Input:', formData.scheduledTime);
+      console.log('   Sending:', new Date(formData.scheduledTime).toISOString());
+
       await api.post('/posts/schedule', {
         caption: formData.caption,
         hashtags,
@@ -108,8 +112,8 @@ const CreatePost = () => {
                 type="button"
                 onClick={() => togglePlatform(platform.id)}
                 className={`flex items-center p-3 border rounded-lg transition-colors ${formData.platforms.includes(platform.id)
-                    ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
-                    : 'border-gray-300 hover:border-gray-400'
+                  ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                  : 'border-gray-300 hover:border-gray-400'
                   }`}
               >
                 <span className="text-xl mr-2">{platform.icon}</span>
