@@ -28,12 +28,12 @@ const CreatePost = () => {
 
     try {
       const hashtags = formData.hashtags.split(' ').filter(tag => tag.trim());
-      
+
       await api.post('/posts/schedule', {
         caption: formData.caption,
         hashtags,
         platforms: formData.platforms,
-        scheduledTime: formData.scheduledTime
+        scheduledTime: new Date(formData.scheduledTime).toISOString()
       });
 
       setSuccess('Post scheduled successfully!');
@@ -57,7 +57,7 @@ const CreatePost = () => {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Create New Post</h1>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
@@ -107,11 +107,10 @@ const CreatePost = () => {
                 key={platform.id}
                 type="button"
                 onClick={() => togglePlatform(platform.id)}
-                className={`flex items-center p-3 border rounded-lg transition-colors ${
-                  formData.platforms.includes(platform.id)
+                className={`flex items-center p-3 border rounded-lg transition-colors ${formData.platforms.includes(platform.id)
                     ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
                     : 'border-gray-300 hover:border-gray-400'
-                }`}
+                  }`}
               >
                 <span className="text-xl mr-2">{platform.icon}</span>
                 {platform.name}
