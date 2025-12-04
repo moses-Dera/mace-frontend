@@ -39,20 +39,18 @@ const Sidebar = () => {
 
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <div className={`bg-gray-800 text-white w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform transition duration-200 ease-in-out z-40 ${
-        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-      } md:relative md:translate-x-0`}>
-        <div className="text-white flex items-center justify-between px-4">
+      <div className={`bg-classic-navy text-white w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform transition duration-200 ease-in-out z-40 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:relative md:translate-x-0 border-r border-classic-gold/20`}>
+        <div className="text-white flex items-center justify-between px-4 mb-8">
           <div className="flex items-center space-x-2">
-            <span className="text-2xl font-extrabold">🚀</span>
-            <span className="text-xl font-bold">SocialAI</span>
+            <span className="text-2xl font-bold font-serif tracking-wider">MACE</span>
           </div>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
@@ -64,43 +62,41 @@ const Sidebar = () => {
           </button>
         </div>
 
-      <nav>
-        {navigation.map((item) => (
-          <Link
-            key={item.name}
-            to={item.href}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className={`block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 ${
-              location.pathname === item.href ? 'bg-gray-700' : ''
-            }`}
-          >
-            <span className="mr-3">{item.icon}</span>
-            {item.name}
-          </Link>
-        ))}
-
-        {user?.role === 'admin' && (
-          <>
-            <div className="border-t border-gray-700 my-4"></div>
-            <div className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-              Admin
-            </div>
-            {adminNavigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 ${
-                  location.pathname === item.href ? 'bg-gray-700' : ''
+        <nav>
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              to={item.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`block py-3 px-4 rounded transition duration-200 hover:bg-classic-gold/10 hover:text-classic-gold ${location.pathname === item.href ? 'bg-classic-gold/20 text-classic-gold border-r-4 border-classic-gold' : 'text-classic-cream/80'
                 }`}
-              >
-                <span className="mr-3">{item.icon}</span>
-                {item.name}
-              </Link>
-            ))}
-          </>
-        )}
-      </nav>
+            >
+              <span className="mr-3">{item.icon}</span>
+              <span className="font-medium">{item.name}</span>
+            </Link>
+          ))}
+
+          {user?.role === 'admin' && (
+            <>
+              <div className="border-t border-classic-gold/20 my-4 mx-4"></div>
+              <div className="px-4 text-xs font-semibold text-classic-gold/60 uppercase tracking-wider mb-2">
+                Admin
+              </div>
+              {adminNavigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block py-3 px-4 rounded transition duration-200 hover:bg-classic-gold/10 hover:text-classic-gold ${location.pathname === item.href ? 'bg-classic-gold/20 text-classic-gold border-r-4 border-classic-gold' : 'text-classic-cream/80'
+                    }`}
+                >
+                  <span className="mr-3">{item.icon}</span>
+                  <span className="font-medium">{item.name}</span>
+                </Link>
+              ))}
+            </>
+          )}
+        </nav>
       </div>
     </>
   );

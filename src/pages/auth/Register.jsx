@@ -28,65 +28,68 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-classic-cream font-sans">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-xl border border-classic-navy/10">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">🚀 SocialAI</h1>
-          <h2 className="text-2xl font-semibold text-gray-700">Create your account</h2>
+          <h1 className="text-4xl font-bold text-classic-navy mb-2 font-serif">MACE</h1>
+          <h2 className="text-xl text-classic-slate">Create your account</h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded text-sm">
               {error}
             </div>
           )}
           {success && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded text-sm">
               {success}
             </div>
           )}
-          <div>
-            <input
-              type="text"
-              required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Full name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            />
+          <div className="space-y-4">
+            <div>
+              <input
+                type="text"
+                required
+                className="appearance-none rounded-md relative block w-full px-3 py-3 border border-classic-navy/20 placeholder-classic-slate/50 text-classic-charcoal focus:outline-none focus:ring-2 focus:ring-classic-gold focus:border-transparent transition-all"
+                placeholder="Full name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                required
+                className="appearance-none rounded-md relative block w-full px-3 py-3 border border-classic-navy/20 placeholder-classic-slate/50 text-classic-charcoal focus:outline-none focus:ring-2 focus:ring-classic-gold focus:border-transparent transition-all"
+                placeholder="Email address"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                required
+                minLength={8}
+                className="appearance-none rounded-md relative block w-full px-3 py-3 border border-classic-navy/20 placeholder-classic-slate/50 text-classic-charcoal focus:outline-none focus:ring-2 focus:ring-classic-gold focus:border-transparent transition-all"
+                placeholder="Password (min 8 characters)"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              />
+            </div>
           </div>
-          <div>
-            <input
-              type="email"
-              required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Email address"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              required
-              minLength={8}
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Password (min 8 characters)"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            />
-          </div>
+
           <div>
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-classic-navy hover:bg-classic-navy/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-classic-navy disabled:opacity-50 transition-all shadow-md hover:shadow-lg"
             >
               {loading ? 'Creating account...' : 'Sign up'}
             </button>
           </div>
           <div className="text-center">
-            <Link to="/login" className="text-indigo-600 hover:text-indigo-500">
+            <Link to="/login" className="text-classic-navy hover:text-classic-gold font-medium transition-colors">
               Already have an account? Sign in
             </Link>
           </div>
