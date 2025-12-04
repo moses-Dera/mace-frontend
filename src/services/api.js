@@ -1,11 +1,24 @@
 import axios from 'axios';
 
+// Auto-detect environment and use appropriate API URL
+const getApiUrl = () => {
+  // Check if we're in development (localhost)
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return import.meta.env.VITE_API_URL_LOCAL || 'http://localhost:5000/api';
+  }
+  // Production environment
+  return import.meta.env.VITE_API_URL_PRODUCTION || 'https://mace-backend.onrender.com/api';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: getApiUrl(),
   headers: {
     'Content-Type': 'application/json'
   }
 });
+
+// Log which API URL is being used
+console.log('🔗 API URL:', getApiUrl());
 
 // Request interceptor to add token
 api.interceptors.request.use(
