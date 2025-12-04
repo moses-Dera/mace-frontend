@@ -10,7 +10,7 @@ const LandingPage = () => {
                 <div className="text-2xl font-serif font-bold text-classic-navy">MACE</div>
                 <div className="space-x-6">
                     <Link to="/login" className="text-classic-navy hover:text-classic-gold transition-colors font-medium">Log In</Link>
-                    <Link to="/signup" className="px-6 py-2 bg-classic-navy text-white rounded-md hover:bg-classic-navy/90 transition-colors font-medium shadow-md">Get Started</Link>
+                    <a href="https://socialai-beta.vercel.app/register" className="px-6 py-2 bg-classic-navy text-white rounded-md hover:bg-classic-navy/90 transition-colors font-medium shadow-md">Get Started</a>
                 </div>
             </nav>
 
@@ -23,9 +23,9 @@ const LandingPage = () => {
                     The elegant solution for modern social media management. Schedule, analyze, and grow with precision and style.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                    <Link to="/signup" className="px-8 py-4 bg-classic-navy text-white text-lg rounded-md hover:bg-classic-navy/90 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                    <a href="https://socialai-beta.vercel.app/register" className="px-8 py-4 bg-classic-navy text-white text-lg rounded-md hover:bg-classic-navy/90 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
                         Start Your Journey <ArrowRight size={20} />
-                    </Link>
+                    </a>
                     <Link to="/demo" className="px-8 py-4 bg-white text-classic-navy border border-classic-navy/20 text-lg rounded-md hover:bg-classic-cream transition-all shadow-sm hover:shadow-md">
                         View Demo
                     </Link>
