@@ -21,6 +21,8 @@ import AdminAutomations from './pages/admin/Automations';
 import Layout from './components/layout/Layout';
 import PrivateRoute from './components/auth/PrivateRoute';
 
+import LandingPage from './pages/LandingPage';
+
 function App() {
   return (
     <AuthProvider>
@@ -28,6 +30,7 @@ function App() {
         <Routes>
 
           {/* Public routes */}
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/privacy" element={<Privacy />} />
@@ -38,7 +41,6 @@ function App() {
           {/* Protected routes */}
           <Route path="/" element={<PrivateRoute />}>
             <Route element={<Layout />}>
-              <Route index element={<Navigate to="/dashboard" />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="create" element={<CreatePost />} />
               <Route path="scheduled" element={<ScheduledPosts />} />

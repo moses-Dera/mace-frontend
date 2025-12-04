@@ -10,24 +10,23 @@ const TwitterCallback = () => {
 
     useEffect(() => {
         const handleCallback = async () => {
-            // OAuth 1.0a uses oauth_token and oauth_verifier
-            const oauth_token = searchParams.get('oauth_token');
-            const oauth_verifier = searchParams.get('oauth_verifier');
-            const denied = searchParams.get('denied');
+            const state = searchParams.get('state');
+            const code = searchParams.get('code');
+            const errorParam = searchParams.get('error');
 
-            if (denied) {
-                setError('Authorization denied by user.');
+            if (errorParam) {
+                setError(`Twitter Auth Error: ${errorParam}`);
                 return;
             }
 
-            if (!oauth_token || !oauth_verifier) {
-                setError('Missing oauth_token or oauth_verifier parameters.');
+            if (!state || !code) {
+                setError('Missing state or code parameters.');
                 return;
             }
 
             try {
                 setStatus('Connecting your Twitter account...');
-                await api.post('/social/callback/twitter', { oauth_token, oauth_verifier });
+                await api.post('/social/callback/twitter', { state, code });
                 setStatus('Success! Redirecting...');
                 setTimeout(() => navigate('/connect'), 1500);
             } catch (err) {
