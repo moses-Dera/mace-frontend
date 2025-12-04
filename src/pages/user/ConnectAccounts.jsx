@@ -35,13 +35,13 @@ const ConnectAccounts = () => {
     }
     
     if (platformName === 'Twitter') {
-      try {
-        const response = await api.get('/social/auth/twitter');
-        window.location.href = response.data.url;
-      } catch (error) {
-        console.error('Failed to initiate Twitter auth:', error);
-        alert('Failed to start Twitter connection. Please try again.');
-      }
+      // Mock connection for demo - replace with real OAuth when ready
+      alert('🔄 Twitter Reconnection\n\nIn a real app, this would:\n1. Open Twitter OAuth\n2. Refresh your token\n3. Update connection status\n\nFor now, this is a demo placeholder.');
+      
+      // Simulate successful reconnection
+      setTimeout(() => {
+        alert('✅ Twitter reconnected successfully!\n\n(This is a demo - no actual connection made)');
+      }, 1000);
     }
   };
 
@@ -132,12 +132,29 @@ const ConnectAccounts = () => {
               </button>
 
               {connected && (
-                <button
-                  onClick={() => alert('Disconnect feature coming soon!')}
-                  className="w-full mt-2 py-2 px-4 border border-red-300 text-red-700 rounded-md hover:bg-red-50 transition-colors"
-                >
-                  Disconnect
-                </button>
+                <div className="space-y-2">
+                  <div className="text-xs text-gray-500">
+                    {account.tokenExpiresAt && new Date(account.tokenExpiresAt) < new Date() ? (
+                      <span className="text-red-600">⚠️ Token expired - Reconnect needed</span>
+                    ) : (
+                      <span className="text-green-600">✅ Token valid</span>
+                    )}
+                  </div>
+                  
+                  <button
+                    onClick={() => connectAccount(platform.name, platform.available)}
+                    className="w-full py-2 px-4 border border-blue-300 text-blue-700 rounded-md hover:bg-blue-50 transition-colors"
+                  >
+                    Reconnect
+                  </button>
+                  
+                  <button
+                    onClick={() => alert('Disconnect feature coming soon!')}
+                    className="w-full py-2 px-4 border border-red-300 text-red-700 rounded-md hover:bg-red-50 transition-colors"
+                  >
+                    Disconnect
+                  </button>
+                </div>
               )}
             </div>
           );
@@ -153,8 +170,17 @@ const ConnectAccounts = () => {
         </div>
         
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="text-lg font-medium text-yellow-900 mb-2">🚀 More Platforms Coming Soon</h3>
+          <h3 className="text-lg font-medium text-yellow-900 mb-2">⚠️ Token Management</h3>
           <p className="text-yellow-800">
+            Social media tokens expire periodically for security. If you see "Token expired", 
+            simply click "Reconnect" to refresh your connection. This is normal and helps 
+            keep your accounts secure.
+          </p>
+        </div>
+        
+        <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
+          <h3 className="text-lg font-medium text-orange-900 mb-2">🚀 More Platforms Coming Soon</h3>
+          <p className="text-orange-800">
             Instagram, LinkedIn, Facebook, and TikTok integrations are in development.
             Stay tuned for updates!
           </p>
